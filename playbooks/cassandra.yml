@@ -1,0 +1,10 @@
+---
+- hosts: cassandra
+  tasks:
+  - name: copy Cassandra config
+    copy: src=/home/zoey/cassandra.yaml dest=/etc/cassandra/cassandra.yaml
+    sudo: yes
+
+  - name: restart Cassandra 
+    service: name=cassandra state=restarted
+    sudo: yes
