@@ -1,0 +1,30 @@
+---
+  - hosts: all
+    tasks:
+      - name: stop puppet
+        service: name=puppet state=stopped enabled=no
+        sudo: yes
+        ignore_errors: True
+  - hosts: all
+    tasks:
+      - name: copy puppet uninstall
+        copy: src=/home/zoey/puppet-enterprise-uninstaller dest=/home/zoey/puppet-enterprise-uninstaller mode=777
+  - hosts: all
+    tasks:
+      - name: copy puppet utilties
+        copy: src=/home/zoey/utilities dest=/home/zoey/utilities
+  - hosts: all
+    tasks:
+      - name: check for puppet
+        stat: path=/etc/puppet*
+        register: p
+      - debug: msg="Path Exists"
+      - name: run uninstaller
+        command: ./puppet-enterprise-uninstaller -d -p -y
+        sudo: yes
+        register: uninstall
+        when: p.stat.isdir is defined and p.stat.isdir
+      - name: "reboot after puppet uninstall"
+        command: /sbin/shutdown -r now
+        when: uninstall|changed
+        sudo: yes
