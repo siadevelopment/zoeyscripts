@@ -22,7 +22,7 @@
       sudo: yes
 
     - name: add key
-      copy: src=/home/zoey/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwader.crt
+      copy: src=/home/zoey/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt
       sudo: yes
 
     - name: start logstash
