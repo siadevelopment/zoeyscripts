@@ -14,8 +14,8 @@
         copy: src=/home/zoey/utilities dest=/home/zoey/utilities
 
       - name: check for puppet
-        stat: path=/etc/puppet*
-        register: p
+        stat: path=/usr/local/bin/facter
+        register: sym
 
       - debug: msg="Path Exists"
 
@@ -23,7 +23,7 @@
         command: ./puppet-enterprise-uninstaller -d -p -y
         sudo: yes
         register: uninstall
-        when: p.stat.isdir is defined and p.stat.isdir
+        when: sym.stat.exists == True
 
       - name: "reboot after puppet uninstall"
         command: /sbin/shutdown -r now
