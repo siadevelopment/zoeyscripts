@@ -17,8 +17,7 @@
         stat: path=/usr/local/bin/facter
         register: sym
 
-      - debug: msg="Path Exists"
-
+      
       - name: run uninstaller
         command: ./puppet-enterprise-uninstaller -d -p -y
         sudo: yes
