@@ -13,16 +13,24 @@
       apt: name='logstash-forwarder' state=present
       sudo: yes
 
-    - name: add config
-      copy: src=/home/zoey/logstash-forwarder.conf dest=/etc/logstash-forwarder.conf
+- hosts: web
+  tasks:
+    - name: add web config
+      copy: src=/home/zoey/config/logstash-forwarder.web dest=/etc/logstash-forwarder.conf
       sudo: yes
+- hosts: cassandra
+  tasks:
+    - name: add cassandra config
+      copy: src=/home/zoey/config/logstash-forwarder.cassandra dest=/etc/logstash-forwarder.conf
+      sudo: yes
+
 
     - name: create folder
       file: path='/etc/pki/tls/certs/' state=directory recurse=yes
       sudo: yes
 
     - name: add key
-      copy: src=/home/zoey/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt
+      copy: src=/home/zoey/config/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt
       sudo: yes
 
     - name: start logstash
