@@ -1,0 +1,26 @@
+---
+- hosts: all
+  tasks:
+
+  - name: Install Basic Packages required on all machines
+    sudo: yes
+    apt:
+        pkg: '{{ item }}'
+        state: present
+    with_items:
+       - open-vm-tools
+       - tmux
+    register: changed
+
+  - name: Make .ssh directory
+    file: path=/home/zoey/.ssh state=directory recurse=yes mode=700
+    sudo: yes
+
+  - name: copy authorized_keys
+    copy: src=../config/authorized_keys dest=/home/zoey/.ssh/authorized_keys mode=600
+ 
+  - name: reboot if open-vm-tools installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: changed|changed
+    
