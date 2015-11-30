@@ -39,7 +39,7 @@
     sudo: yes
 
   - name: copy Cassandra config
-    copy: src=/home/zoey/cassandra.yaml dest=/etc/cassandra/cassandra.yaml
+    copy: src=../config/cassandra.yaml dest=/etc/cassandra/cassandra.yaml
     sudo: yes
 
   - name: restart Cassandra

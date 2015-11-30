@@ -16,12 +16,12 @@
 - hosts: web
   tasks:
     - name: add web config
-      copy: src=/home/zoey/config/logstash-forwarder.web dest=/etc/logstash-forwarder.conf
+      copy: src=../config/logstash-forwarder.web dest=/etc/logstash-forwarder.conf
       sudo: yes
 - hosts: cassandra
   tasks:
     - name: add cassandra config
-      copy: src=/home/zoey/config/logstash-forwarder.cassandra dest=/etc/logstash-forwarder.conf
+      copy: src=../config/logstash-forwarder.cassandra dest=/etc/logstash-forwarder.conf
       sudo: yes
 
 
@@ -30,7 +30,7 @@
       sudo: yes
 
     - name: add key
-      copy: src=/home/zoey/config/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt
+      copy: src=../config/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt
       sudo: yes
 
     - name: start logstash

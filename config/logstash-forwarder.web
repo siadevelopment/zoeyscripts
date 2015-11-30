@@ -1,0 +1,19 @@
+{
+  "network": {
+    "servers": [ "logstash.ad.zoeyrae.xyz:5043" ],
+    "timeout": 15,
+    "ssl ca": "/etc/pki/tls/certs/logstash-forwarder.crt"
+  },
+
+"files": [
+{
+      "paths": [
+        "/var/log/syslog",
+        "/var/log/auth.log"
+	"/var/log/nginx/access.log"
+       ],
+      "fields": { "type": "syslog" }
+      "fields": { "type": "nginx-access" }
+    }
+ ]
+}
