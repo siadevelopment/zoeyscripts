@@ -1,0 +1,12 @@
+---
+- hosts: test
+  tasks:
+  - name: Install required packages
+    sudo: yes
+    apt:
+        pkg: '{{ item }}'
+        state: present
+    with_items:
+       - git
+       - ansible
+       - python-pip
