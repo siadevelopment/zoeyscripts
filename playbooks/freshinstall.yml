@@ -1,6 +1,14 @@
 ---
 - hosts: all
   tasks:
+  - name: Update cache
+    sudo: yes
+    apt: update_cache=yes
+
+  - name: Install updates
+    sudo: yes
+    apt: upgrade=dist
+    register: updated
 
   - name: Install Basic Packages required on all machines
     sudo: yes
@@ -23,4 +31,8 @@
     command: /sbin/shutdown -r now
     sudo: yes
     when: changed|changed
-    
+  
+  - name: reboot if updates installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: updated|changed    

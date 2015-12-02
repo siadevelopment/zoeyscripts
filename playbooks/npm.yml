@@ -1,0 +1,14 @@
+---
+  - hosts: web
+    tasks:
+      - name: Install NPM packages
+        sudo: yes
+        npm:
+          name: '{{ item }}'
+        state=present
+        with_items:
+           - ember-cli
+           - phantomjs2
+           - handlebars
+           - jquery
+           - cassandra-driver
