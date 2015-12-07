@@ -16,8 +16,8 @@
     sudo: yes
 
 
-      name: add npm items
-      npm: name='{{ item }}' state=present global=yes
+    name: add npm items
+    npm: name='{{ item }}' state=present global=yes
       with_items:
       - ember-cli
       - express
