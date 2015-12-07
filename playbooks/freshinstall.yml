@@ -26,7 +26,8 @@
 
   - name: copy authorized_keys
     copy: src=../config/authorized_keys dest=/home/zoey/.ssh/authorized_keys mode=600
- 
+    sudo: yes 
+
   - name: reboot if open-vm-tools installed
     command: /sbin/shutdown -r now
     sudo: yes
