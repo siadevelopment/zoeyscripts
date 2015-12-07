@@ -6,7 +6,7 @@
     - name: add node
       apt: 
         update_cache: yes
-        sudo: yes
+      sudo: yes
 
     - name: install node.js
       apt: 
@@ -22,6 +22,7 @@
 
 
     - name: add npm items
+      sudo: yes
       npm:  
         name: "{{ item }}"
         state: present 
