@@ -18,7 +18,7 @@
 
     name: add npm items
     npm: name= '{{ item }}' state=present global=yes
-      with_items:
+    with_items:
       - ember-cli
       - express
       - gulp
