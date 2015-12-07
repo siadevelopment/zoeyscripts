@@ -5,27 +5,27 @@
   tasks:
     - name: add node
       apt: 
-        cache_update: yes
+      cache_update: yes
       sudo: yes
 
     - name: install node.js
       apt: 
-        pkg: nodejs 
+      pkg: nodejs 
       state: present
       sudo: yes
 
     - name: install npm
       apt: 
-        pkg: npm 
+      pkg: npm 
       state: present
       sudo: yes
 
 
     - name: add npm items
       npm:  
-        name: "{{ item }}"
-        state: present 
-        global: yes
+      name: "{{ item }}"
+      state: present 
+      global: yes
       with_items:
         - ember-cli
         - express
