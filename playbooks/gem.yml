@@ -1,0 +1,20 @@
+---
+  - hosts: web
+    tasks:
+
+    - name: add ruby ppa
+      apt_repository: repo='ppa:brightbox/ruby-ng' state=present update_cache=yes
+
+    - name: add ruby
+      apt: name=ruby2.2 state=installed
+
+    - name: add ruby2.2-dev
+      apt: name=ruby2.2-dev state=installed
+
+    - name: add gems
+      gem: name='{{ item }}' state=present
+      with_items:
+       - coffee-script
+       - rogue
+       - bundler
+
