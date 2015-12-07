@@ -2,7 +2,7 @@
 
   - hosts: web
 
-   tasks:
+  tasks:
   name: add node
   apt: cache_update=yes
   sudo: yes
