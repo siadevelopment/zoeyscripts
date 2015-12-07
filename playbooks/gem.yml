@@ -18,6 +18,6 @@
       gem: name='{{ item }}' state=present
       with_items:
        - coffee-script
-       - rogue
+       - rouge
        - bundler
-       - 
+       - kramdown
