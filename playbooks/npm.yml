@@ -5,7 +5,7 @@
   tasks:
     - name: add node
       apt: 
-      cache_update: yes
+      update_cache: yes
       sudo: yes
 
     - name: install node.js
