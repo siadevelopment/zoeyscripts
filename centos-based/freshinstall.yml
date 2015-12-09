@@ -9,9 +9,10 @@
     sudo: yes
     yum: name=* state=latest
     register: updated
+
   - name: install epel
     sudo: yes
-    yum: name: epel-release state=present
+    yum: name=epel-release state=present
 
   - name: Install Basic Packages required on all machines
     sudo: yes
