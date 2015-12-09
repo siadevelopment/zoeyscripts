@@ -1,9 +1,6 @@
 ---
 - hosts: all
   tasks:
-  - name: Update cache
-    sudo: yes
-    yum: update_cache=yes
 
   - name: Install updates
     sudo: yes
