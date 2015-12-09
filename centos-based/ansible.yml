@@ -1,0 +1,11 @@
+---
+  hosts: azansible
+  tasks:
+
+   - name: Install required packages
+     yum: pkg="{{ items }}" state=present
+     with_items:
+     - "{{git}}"
+     - "{{ansible}}"
+     - "{{pip}}"
+    sudo: yes

@@ -1,0 +1,12 @@
+---
+  - hosts: azuredns
+    tasks:
+      name: Install bind
+      apt: pkg=bind9 state=present
+      sudo: yes
+
+  - name: Install Bind docs
+    apt: pkg=bind9-doc state=present
+    sudo: yes
+
+  - name: Copy  

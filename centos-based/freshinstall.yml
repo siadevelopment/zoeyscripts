@@ -1,0 +1,42 @@
+---
+- hosts: all
+  tasks:
+  - name: Update cache
+    sudo: yes
+    yum: update_cache=yes
+
+  - name: Install updates
+    sudo: yes
+    yum: name=* state=latest
+    register: updated
+  - name: install epel
+    sudo: yes
+    yum: name: epel-release state=present
+
+  - name: Install Basic Packages required on all machines
+    sudo: yes
+    yum:
+        pkg: '{{ item }}'
+        state: present
+    with_items:
+       - open-vm-tools
+       - tmux
+    register: changed
+
+  - name: Make .ssh directory
+    file: path=/home/zoey/.ssh state=directory recurse=yes mode=700
+    sudo: yes
+
+  - name: copy authorized_keys
+    copy: src=../config/authorized_keys dest=/home/zoey/.ssh/authorized_keys mode=600
+    sudo: yes
+
+  - name: reboot if open-vm-tools installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: changed|changed
+
+  - name: reboot if updates installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: updated|changed
