@@ -19,6 +19,7 @@
     with_items:
        - open-vm-tools
        - tmux
+       - nano
     register: changed
 
   - name: Make .ssh directory
@@ -27,6 +28,15 @@
 
   - name: copy authorized_keys
     copy: src=../config/authorized_keys dest=/home/zoey/.ssh/authorized_keys mode=600
+    sudo: yes
+
+  - name: copy sysctl.conf
+    copy: src=../config/sysctl.conf dest=/etc/sysctl.conf
+    sudo: yes
+    register: domain
+
+  - name: chown .ssh
+    command: "chown -R zoey:zoey .ssh"
     sudo: yes
 
   - name: reboot if open-vm-tools installed
@@ -38,3 +48,8 @@
     command: /sbin/shutdown -r now
     sudo: yes
     when: updated|changed
+
+  - name: reboot if domain changed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: domain|changed
