@@ -1,0 +1,14 @@
+---
+	hosts: azure
+	Tasks:
+	
+	- name: update cache
+	apt: update_cache
+	sudo: yes
+
+	- name: update programs
+	command: apt-get dist-upgrade -y
+	sudo: yes
+
+	-name: Install important apps
+	apt: 
