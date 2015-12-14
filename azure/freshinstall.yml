@@ -11,4 +11,10 @@
 	sudo: yes
 
 	-name: Install important apps
-	apt: 
+	apt: name: "{{ item }}"
+	state: present
+	with_items:
+		  - git
+		  - wget
+		  - nano
+		  - 
