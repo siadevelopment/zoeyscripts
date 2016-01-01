@@ -1,0 +1,14 @@
+---
+- hosts: ansible
+  tasks:
+  - name: Install Basic Packages required on all machines
+    sudo: yes
+    apt:
+        pkg: '{{ item }}'
+        state: present
+    with_items:
+            - python-pip
+            - ansible
+            - git
+
+    
