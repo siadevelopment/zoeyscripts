@@ -1,0 +1,30 @@
+---
+  - hosts: all
+    tasks:
+
+      - name: stop puppet
+        service: name=puppet state=stopped enabled=no
+        sudo: yes
+        ignore_errors: True
+
+      - name: copy puppet uninstall
+        copy: src=../config/puppet-enterprise-uninstaller dest=/home/zoey/puppet-enterprise-uninstaller mode=777
+
+      - name: copy puppet utilties
+        copy: src=../config/utilities dest=/home/zoey/utilities
+
+      - name: check for puppet
+        stat: path=/usr/local/bin/facter
+        register: sym
+
+      
+      - name: run uninstaller
+        command: ./puppet-enterprise-uninstaller -d -p -y
+        sudo: yes
+        register: uninstall
+        when: sym.stat.exists == True
+
+      - name: "reboot after puppet uninstall"
+        command: /sbin/shutdown -r now
+        when: uninstall|changed
+        sudo: yes

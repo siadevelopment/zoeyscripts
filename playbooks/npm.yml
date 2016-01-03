@@ -1,0 +1,62 @@
+---
+
+- hosts: web
+
+  tasks:
+    - name: add node
+<<<<<<< HEAD
+      apt:
+      update_cache: yes
+      sudo: yes
+
+    - name: install node.js
+      apt:
+      pkg: nodejs
+      state: present
+      sudo: yes
+
+    - name: install npm
+      apt:
+      pkg: npm
+      state: present
+=======
+      apt: 
+        update_cache: yes
+      sudo: yes
+
+    - name: install node.js
+      apt: 
+        pkg: nodejs 
+        state: present
+      sudo: yes
+
+    - name: install npm
+      apt: 
+        pkg: npm 
+        state: present
+>>>>>>> 56be5560236c0d607df65b1d38cf0fae4320bf4a
+      sudo: yes
+
+    - name: add npm items
+<<<<<<< HEAD
+      npm:
+      name: "{{ item }}"
+      state: present
+      global: yes
+=======
+      sudo: yes
+      npm:  
+        name: "{{ item }}"
+        state: present 
+        global: yes
+>>>>>>> 56be5560236c0d607df65b1d38cf0fae4320bf4a
+      with_items:
+        - ember-cli
+        - express
+        - gulp
+        - grunt
+        - mocha
+        - bower
+        - cassandra-driver
+        - jquery
+        - handlebars

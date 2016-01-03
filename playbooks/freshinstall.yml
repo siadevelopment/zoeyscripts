@@ -1,0 +1,43 @@
+---
+- hosts: all
+  tasks:
+  - name: Update cache
+    sudo: yes
+    apt: update_cache=yes
+
+  - name: Install updates
+    sudo: yes
+    apt: upgrade=dist
+    register: updated
+
+  - name: Install Basic Packages required on all machines
+    sudo: yes
+    apt:
+        pkg: '{{ item }}'
+        state: present
+    with_items:
+       - open-vm-tools
+       - tmux
+    register: changed
+
+  - name: Make .ssh directory
+    file: path=/home/zoey/.ssh state=directory recurse=yes mode=700
+    sudo: yes
+
+  - name: copy authorized_keys
+    copy: src=../config/authorized_keys dest=/home/zoey/.ssh/authorized_keys mode=600
+    sudo: yes 
+
+  - name: chown .ssh
+    command: "chown -R zoey:zoey .ssh"
+    sudo: yes
+
+  - name: reboot if open-vm-tools installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: changed|changed
+  
+  - name: reboot if updates installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: updated|changed    

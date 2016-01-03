@@ -1,0 +1,38 @@
+---
+- hosts: all
+  tasks:
+    - name: elastic
+      apt_key: url=https://packages.elastic.co/GPG-KEY-elasticsearch state=present validate_certs=False
+      sudo: yes
+
+    - name: elastic key
+      apt_repository: repo='deb http://packages.elastic.co/logstashforwarder/debian stable main' state=present update_cache=yes
+      sudo: yes
+
+    - name: add logstashforwarder
+      apt: name='logstash-forwarder' state=present
+      sudo: yes
+
+- hosts: web
+  tasks:
+    - name: add web config
+      copy: src=../config/logstash-forwarder.web dest=/etc/logstash-forwarder.conf
+      sudo: yes
+- hosts: cassandra
+  tasks:
+    - name: add cassandra config
+      copy: src=../config/logstash-forwarder.cassandra dest=/etc/logstash-forwarder.conf
+      sudo: yes
+
+
+    - name: create folder
+      file: path='/etc/pki/tls/certs/' state=directory recurse=yes
+      sudo: yes
+
+    - name: add key
+      copy: src=../config/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt
+      sudo: yes
+
+    - name: start logstash
+      service: name=logstash-forwarder state=started enabled=yes
+      sudo: yes

@@ -1,0 +1,23 @@
+$TTL	604800
+@	IN	SOA	azopsdns1.opssales.net.	admin.opssales.net (
+	20151914	;Serial
+	604800	;Refresh
+	86400	;Retry
+	241920	;Expire
+	604800 )	;Negative Cache TTL
+
+; name servers
+	IN	NS	azprojectzdns1.hozend.xyz.
+	IN	NS	azprojectzdns2.hozend.xyz.
+; PTR Records
+
+# 0.36	IN	PTR	azopsdns1.opssales.net. ; 192.168.0.36
+# 0.37	IN	PTR	azopsdns2.opssales.net.	; 192.168.0.37
+# 0.38	IN	PTR	azopsdb1.opssales.net.	; 192.168.0.38
+# 0.39	IN	PTR	azopsdb2.opssales.net.	; 192.168.0.39
+# 0.40	IN	PTR	azopshaproxy.opssales.net.	; 192.168.0.40
+# 0.41	IN	PTR	azopsredis.opssales.net.	; 192.168.0.41
+# 0.42	IN	PTR	azopsweb1.opssales.net.	; 192.168.0.42
+# 0.43	IN	PTR	azopsweb2.opssales.net.	; 192.168.0.43
+# 0.44	IN	PTR	puppet.opssales.net.	; 192.168.0.44
+# 0.57	IN	PTR	logstash.opssales.net.	; 192.168.0.57

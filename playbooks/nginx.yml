@@ -1,0 +1,18 @@
+---
+  - hosts: web
+    tasks:
+    - name: Install nginx
+      apt: pkg=nginx state=present
+      sudo: yes
+
+    - name: Install 'node.js'
+      apt: pkg=nodejs state=present
+      sudo: yes
+
+    - name: copy config
+      copy: src=../config/default dest=/etc/nginx/sites-available/default
+      sudo: yes
+
+    - name: restart nginx
+      service: name=nginx state=restarted
+      sudo: yes

@@ -1,0 +1,37 @@
+---
+
+- hosts: web
+
+  tasks:
+    - name: add node
+      apt:
+      update_cache: yes
+      sudo: yes
+
+    - name: install node.js
+      apt:
+      pkg: nodejs
+      state: present
+      sudo: yes
+
+    - name: install npm
+      apt:
+      pkg: npm
+      state: present
+      sudo: yes
+
+    - name: add npm items
+      npm:
+      name: "{{ item }}"
+      state: present
+      global: yes
+      with_items:
+        - ember-cli
+        - express
+        - gulp
+        - grunt
+        - mocha
+        - bower
+        - cassandra-driver
+        - jquery
+        - handlebars

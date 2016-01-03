@@ -1,0 +1,9 @@
+zone "opssales.net" {
+	type master;
+	file "/etc/named/zones/db.opssales.net";
+};
+
+zone "168.192.in-addr.arpa" {
+	type master;
+	file "/etc/named/zones/db.168.192";
+};
