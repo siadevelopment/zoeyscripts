@@ -1,0 +1,58 @@
+---
+- hosts: all
+
+  tasks:
+
+  - name: Install updates
+    sudo: yes
+    yum: name=* state=latest update_cache=yes
+    register: updated
+
+  - name: install epel
+    sudo: yes
+    yum: name=epel-release state=present
+
+  - name: Install Basic Packages required on all machines
+    sudo: yes
+    yum:
+        pkg: '{{ item }}'
+        state: present
+    with_items:
+       - open-vm-tools
+       - tmux
+       - nano
+       - wget
+    register: changed
+  - name: copy sshd_config
+    copy: src=../config/sshd_config dest=/etc/ssh/sshd_config
+    sudo: yes
+   
+  - name: Make .ssh directory
+    file: path=/home/zoey/.ssh state=directory recurse=yes mode=700 owner=zoey group=zoey
+    sudo: yes    
+
+  - name: copy authorized_keys
+    copy: src=../config/authorized_keys dest=/home/zoey/.ssh/authorized_keys mode=600 owner=zoey group=zoey
+    sudo: yes
+
+  - name: copy config
+    copy: src=../config/config dest=/home/zoey/.ssh/config mode=600 owner=zoey group=zoey
+    sudo: yes
+
+  - name: copy private key
+    copy: src=../private/test.pem dest=/home/zoey/.ssh/id_rsa mode=600 owner=zoey group=zoey
+    sudo: yes
+
+  - name: reboot if open-vm-tools installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: changed|changed
+
+  - name: reboot if updates installed
+    command: /sbin/shutdown -r now
+    sudo: yes
+    when: updated|changed
+
+  - name: restart ssh
+    command: service sshd restart
+    sudo: yes

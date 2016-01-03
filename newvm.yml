@@ -1,0 +1,54 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  user: zcluff
+  sudo: true
+
+  vars_prompt:
+    - name: "vcenter_hostname"
+      prompt: "Enter vcenter hostname"
+      private: no
+      default: "vcsa"
+    - name: "vcenter_user"
+      prompt: "Enter vcenter username"
+      private: no
+    - name: "vcenter_pass"
+      prompt: "Enter vcenter password"
+      private: yes
+
+  vars:
+    datacenter: 'Datacenter'
+    esxi_host: 'esxi.ad.zoeyrae.xyz'
+    notes: 'Created by Ansible'
+
+  tasks:
+    - vsphere_guest:
+        vcenter_hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_user }}"
+        password: "{{ vcenter_pass }}"
+        guest: "test"
+        state: present
+        vm_extra_config:
+          notes: "{{ notes }}"
+        vm_disk:
+          disk1:
+            size_gb: 60
+            type: thin
+            datastore: "1tb"
+        vm_nic:
+          nic1:
+            type: vmxnet3
+            network: "VM Network"
+            network_type: standard
+        vm_hardware:
+          memory_mb: "2048"
+          num_cpus: "2"
+          osid: "ubuntu64Guest"
+          scsi: paravirtual
+        vm_cdrom:
+          type: "iso"
+          iso_path: "1tb/ISO/ubuntu-14.04.3-server-amd64.iso" 
+        esxi:
+          datacenter: "Datacenter"
+          hostname: "esxi.ad.zoeyrae.xyz"
