@@ -1,6 +1,0 @@
----
-   - hosts: all
-     tasks:
-      - name: reboot  
-        command: shutdown -r now "Ansible updates triggered"
-        sudo: yes 
